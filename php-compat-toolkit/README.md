@@ -5,6 +5,9 @@ compatibility reports and summarize the findings.
 
 ## The Workflow
 1. Download archive or clone the repository
+1. You'll need to edit some of these scripts. Whether you do that first, and then
+   transfer them to the IFS, or transfer them first and edit in-place, is up
+   to you.
 1. Edit `find-php-extensions.sh`
    - REPORT_DIR is the absolute path to directory where your report output will be written
    - OUTPUT_RPT is the name of the file extensions report
@@ -15,7 +18,7 @@ compatibility reports and summarize the findings.
 
 1. Read the output file for a candidate list of file extensions the _appear_ to contain PHP.
    Make your best judgment with this list.
-1. Check `CodeSniffer.conf` and make sure the current setting will work
+1. Check `CodeSniffer.conf`. The initial value should work for you.
    - `installed_paths` is the absolute path to where the PHPCompatibility standard resides on disk. 
    - If you [install PHPCompatibility separately](https://github.com/PHPCompatibility/PHPCompatibility#installation-via-a-git-check-out-to-an-arbitrary-directory-method-2),
      (and you should, after initial use of this toolkit), you will need to update
@@ -55,7 +58,18 @@ compatibility reports and summarize the findings.
      - raw-ext-findings.txt
 1. Make `summarise-compat-findings.sh` executable and run it.
 
-       chmod u+x summarise-compat-findings.sh` && ./summarise-compat-findings.sh`
+       chmod u+x summarise-compat-findings.sh && ./summarise-compat-findings.sh
 
-   - Your summary is displayed on the screen. You can redirect to a file like this:
-     `./summarise-compat-findings.sh > compatibility-summary.txt`
+   - Your summary will be in a file called `compatibility-summary-YYMMDD.txt` and is
+     also displayed on the screen.
+     
+Here is an example. If yours is this clean, consider yourself lucky!
+
+```
+               PHP Compatibility Finding               : Number of Occurrences
+------------------------------------------------------------------------------
+File has mixed line endings; this may cause incorrect results:  240
+INI directive 'highlight.bg' is deprecated since PHP 5.3 and removed since PHP 5.4:    2
+'resource' is a soft reserved keyword as of PHP version 7.0 and should not be used to name a class, interface or trait or as part of a:    1
+'float' is a reserved keyword as of PHP version 7.0 and should not be used to name a class, interface or trait or as part of a namespace:    1
+```

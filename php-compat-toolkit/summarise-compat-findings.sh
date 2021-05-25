@@ -9,6 +9,8 @@
 # Usage:
 #     chmod u+x summarise-compat-findings.sh
 #     ./summarise-compat-findings.sh
+
+TODAY="$(date +'%Y%m%d')"
 REPORT_DIR="/home/$LOGNAME/php-compat-toolkit"
 SCRIPTS_DIR="/home/$LOGNAME/php-compat-toolkit"
 php_exe="/usr/local/zendsvr6/bin/php-cli" # path to your PHP binary (executable)
@@ -58,4 +60,4 @@ printf "Total findings in %d reports\nError-level  : %d\nWarning-level: %d\n" "$
 printf "Number of PHP source code files affected by findings: %d\n\n" "$fsum"
 
 test -e "$SCRIPTS_DIR/counts.php" || { printf "%s/counts.php is missing\n" "$REPORT_DIR"; exit 1; }
-"$php_exe" "$SCRIPTS_DIR/counts.php" "$raw_counts"
+"$php_exe" "$SCRIPTS_DIR/counts.php" "$raw_counts" > "$REPORT_DIR/compatibility-summary-$TODAY.txt"

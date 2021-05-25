@@ -17,16 +17,19 @@
 TODAY="$(date +'%Y%m%d')"
 ENCLOSING="/www/zendsvr6/htdocs"
 REPORT_DIR="/home/$LOGNAME/php-compat-toolkit" # /path/to/your/desired/report/output/folder
-PHP_MEM_LIMIT="1024M" # 1GB, you can almost always lower this
+PHP_MEM_LIMIT="1024M" # 1GB, you can almost always lower this; raise if scans runs out of memory
 FILE_EXTENSIONS="html,inc,php,phtml"
 IGNORE_FILES="*/vendor/*,*Copy*,*/folder2/*"
 TARGET_PHP_VERSION=7.4
 SRC_DIR=foldername # the name of the directory within $ENCLOSING to scan
 RPT_FILEPATH="$REPORT_DIR/$SRC_DIR-$TARGET_PHP_VERSION-$TODAY.out"
 SNIFFS="" # if you know phpcs and PHPCompatibility, a list of specific sniffs to use
-RUN_PROGRESS=""
-#RUN_PROGRESS="-p" # uncomment if you want to see dots printed as a progress meter
+RUN_PROGRESS=-p
+#RUN_PROGRESS="" # uncomment if you NOT want to see the progress meter
 php_exe="/usr/local/zendsvr6/bin/php-cli" # path to your PHP binary (executable)
+
+test -r "$ENCLOSING/$SRC_DIR" || { printf "%s does not exist or is not readable\n" "$ENCLOSING/$SRC_DIR"; exit 1; }
+test -w "$REPORT_DIR" || { printf "%s does not exist or is not writable\n" "$REPORT_DIR"; exit 1; }
 
 printf "Scanning for PHP compatibility findings in %s...\n" $SRC_DIR
 $php_exe "/home/$LOGNAME/php-compat-toolkit/phpcs.phar" -d memory_limit="$PHP_MEM_LIMIT" --no-colors \

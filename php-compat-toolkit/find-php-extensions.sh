@@ -13,8 +13,8 @@ REPORT_DIR="/home/$LOGNAME/php-compat-toolkit" # /Absolute/path/to/report/output
 OUTPUT_RPT="file-extensions-with-php.out"
 TARGET_DIR="/www/zendsvr6/htdocs/foldername" # /path/to/directory/tree/to/scan
 
-cd $TARGET_DIR || exit 1
+cd $TARGET_DIR || { printf "Cannot change to %s\n" "$TARGET_DIR"; exit 1; }
 
 /QOpenSys/pkgs/bin/grep -E -l --recursive --exclude-dir=.svn '<\?php|<\?=' . \
-  | grep -v '^Binary file' | xargs basename | awk -F. '{print $NF}' \
+  | grep -v '^Binary file' | xargs basename --multiple | awk -F. '{print $NF}' \
   | sort | uniq > "$REPORT_DIR/$OUTPUT_RPT"
