@@ -72,4 +72,7 @@ File has mixed line endings; this may cause incorrect results:  240
 INI directive 'highlight.bg' is deprecated since PHP 5.3 and removed since PHP 5.4:    2
 'resource' is a soft reserved keyword as of PHP version 7.0 and should not be used to name a class, interface or trait or as part of a:    1
 'float' is a reserved keyword as of PHP version 7.0 and should not be used to name a class, interface or trait or as part of a namespace:    1
+
+-------------------------------------------------------------------------------
+Total Findings                                         :  244
 ```
