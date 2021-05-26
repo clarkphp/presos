@@ -16,7 +16,7 @@ compatibility reports and summarize the findings.
 
        chmod u+x find-php-extensions.sh && ./find-php-extensions.sh
 
-1. Read the output file for a candidate list of file extensions the _appear_ to contain PHP.
+1. Read the output file for a candidate list of file extensions that _appear_ to contain PHP.
    Make your best judgment with this list.
 1. Check `CodeSniffer.conf`. The initial value should work for you.
    - `installed_paths` is the absolute path to where the PHPCompatibility standard resides on disk. 
