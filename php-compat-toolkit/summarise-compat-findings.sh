@@ -28,13 +28,14 @@ raw_ext_findings="$REPORT_DIR/raw-ext-findings.txt"
 
 printf "" > "$raw_findings"
 printf "" > "$raw_counts"
+printf "" > "$raw_ext_findings"
 
 for REPORT_FILE in *.out; do
   e_count=0
   w_count=0
   f_count=0
 
-  if [ ! -e "$REPORT_FILE" ]; then # POSIX test for existence
+  if [ ! -e "$REPORT_FILE" ]; then
     continue
   fi
 
@@ -49,15 +50,17 @@ for REPORT_FILE in *.out; do
   wsum=$((wsum + w_count))
   fsum=$((fsum + f_count))
 
-  grep '| ERROR \|| WARNING ' "$REPORT_FILE" |
-    awk 'BEGIN {FS = "|";} { print $3 >> "'$raw_findings'"; ++findings[$3] } END { for (i in findings) print i, findings[i] }' >> "$raw_counts"
+  grep '| ERROR \|| WARNING ' "$REPORT_FILE" \
+    | awk 'BEGIN {FS = "|";} { print $3 >> "'$raw_findings'"; ++findings[$3] } END { for (i in findings) print i, findings[i] }' >> "$raw_counts"
 done
 
 sort -o "$raw_counts" "$raw_counts"
-uniq "$raw_counts" | grep -F ' Extension ' "$raw_counts" > "$raw_ext_findings"
+uniq "$raw_counts" | grep -F ' Extension ' > "$raw_ext_findings"
 
-printf "Total findings in %d reports\nError-level  : %d\nWarning-level: %d\n" "$i" "$esum" "$wsum"
+printf "Total findings in %d reports\nError-level  : %d\nWarning-level: %d\nTotal: %d\n" "$i" "$esum" "$wsum" "$((esum + wsum))"
 printf "Number of PHP source code files affected by findings: %d\n\n" "$fsum"
 
 test -e "$SCRIPTS_DIR/counts.php" || { printf "%s/counts.php is missing\n" "$REPORT_DIR"; exit 1; }
 "$php_exe" "$SCRIPTS_DIR/counts.php" "$raw_counts" > "$REPORT_DIR/compatibility-summary-$TODAY.txt"
+
+printf "Look for Summary Report in %s\n" "$REPORT_DIR/compatibility-summary-$TODAY.txt"
