@@ -10,11 +10,11 @@
 #    chmod u+x find-relevant-extensions.sh
 #    ./find-relevant-extensions.sh
 REPORT_DIR="/home/$LOGNAME/php-compat-toolkit" # /Absolute/path/to/report/output/directory
-OUTPUT_RPT="file-extensions-with-php.out"
+OUTPUT_RPT="file-extensions-with-php.txt"
 TARGET_DIR="/www/zendsvr6/htdocs/foldername" # /path/to/directory/tree/to/scan
 
 cd $TARGET_DIR || { printf "Cannot change to %s\n" "$TARGET_DIR"; exit 1; }
 
-/QOpenSys/pkgs/bin/grep -E -l --recursive --exclude-dir=.svn '<\?php|<\?=' . \
-  | grep -v '^Binary file' | xargs basename --multiple | awk -F. '{print $NF}' \
+/QOpenSys/pkgs/bin/grep --null -E -l --recursive --exclude-dir=.svn '<\?php|<\?=' . \
+  | grep -v '^Binary file' | xargs -0 basename -a | awk -F. '{print $NF}' \
   | sort | uniq > "$REPORT_DIR/$OUTPUT_RPT"
