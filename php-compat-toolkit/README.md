@@ -37,10 +37,11 @@ to gauge the size of a PHP version migration effort.
    - `ENCLOSING` the path to the folder that encloses your application folder
    - `REPORT_DIR` the path to where you want scan results to go
    - `PHP_MEM_LIMIT` the maximum anount of memory to let PHP have while scanning
-   - `FILE_EXTENSIONS` comma-separated list of file extensions to scan. Base this
+   - `FILE_EXTENSIONS` **COMMA**-separated list of file extensions to scan. Base this
      upon the output from running `find-php-extensions.sh` above.
    - `IGNORE_FILES` which folders and file patterns scanning should ignore
    - `TARGET_PHP_VERSION` the version of PHP you plan to migrate to
+   - `DIRLIST` **SPACE**-separated list of folders to scan within $ENCLOSING; if you have only one folder, that's okay
    - `SRC_DIR` the name of the directory within $ENCLOSING to scan for compatibility
      findings. This can be "" if your app is entirely under $ENCLOSING.
    - `RPT_FILEPATH` you normally don't edit this; it is built up from the other variables
