@@ -22,8 +22,7 @@ FILE_EXTENSIONS="html,inc,php,phtml"
 IGNORE_FILES="*/vendor/*,*Copy*,*/folder2/*"
 TARGET_PHP_VERSION=7.4
 DIRLIST='foldername1 foldername2' # space-separated list of folders to scan within $ENCLOSING
-for i in $DIRLIST; do
-  SRC_DIR=$i # the name of the directory within $ENCLOSING to scan
+for SRC_DIR in $DIRLIST; do
   RPT_FILEPATH="$REPORT_DIR/$SRC_DIR-$TARGET_PHP_VERSION-$TODAY.out"
   SNIFFS="" # if you know phpcs and PHPCompatibility, a list of specific sniffs to use
   RUN_PROGRESS=-p
@@ -33,9 +32,9 @@ for i in $DIRLIST; do
   test -r "$ENCLOSING/$SRC_DIR" || { printf "%s does not exist or is not readable\n" "$ENCLOSING/$SRC_DIR"; exit 1; }
   test -w "$REPORT_DIR" || { printf "%s does not exist or is not writable\n" "$REPORT_DIR"; exit 1; }
 
-  printf "Scanning for PHP compatibility findings in %s...\n" $SRC_DIR
+  printf "Scanning for PHP compatibility findings in %s...\n" "$SRC_DIR"
   $php_exe "/home/$LOGNAME/php-compat-toolkit/phpcs.phar" -d memory_limit="$PHP_MEM_LIMIT" --no-colors \
-   --extensions=$FILE_EXTENSIONS "$RUN_PROGRESS" $ENCLOSING/$SRC_DIR \
+   --extensions="$FILE_EXTENSIONS" "$RUN_PROGRESS" "$ENCLOSING/$SRC_DIR" \
    --ignore="$IGNORE_FILES" --report-full="$RPT_FILEPATH" \
    --standard=PHPCompatibility "$SNIFFS" --runtime-set testVersion $TARGET_PHP_VERSION
 
