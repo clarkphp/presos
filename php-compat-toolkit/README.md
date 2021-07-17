@@ -17,7 +17,8 @@ to gauge the size of a PHP version migration effort.
    transfer them to the IFS, or transfer them first and edit in-place, is up
    to you.
 1. Edit `find-php-extensions.sh`
-   - This script identifies all file extensions that appear to have PHP source code in them. Files with these extensions might NOT have PHP source in them, but this script provides a candidate list.
+   - This script identifies all file extensions that appear to have PHP source code in them. Files with
+     these extensions might **NOT** have PHP source in them, but this script provides a _candidate list_.
    - REPORT_DIR is the absolute path to directory where your report output will be written
    - OUTPUT_RPT is the name of the file extensions report
    - TARGET_DIR is the absolute path to the directory subtree to look for files containing PHP
@@ -60,6 +61,7 @@ to gauge the size of a PHP version migration effort.
    - `REPORT_DIR` the path to where you want output to be written
    - `SCRIPTS_DIR` the path to where the `counts.php` file resides. You won't need
      to edit this value unless you move that file.
+   - `PHP_VER` the target PHP version you plan to migrate to; in the future, this will be set automatically
    - `$php_exe` absolute path to your PHP binary (executable). This allows the script
      to run even if you don't have PHP included in your command PATH environment variable.
      Or you can run using a different version of PHP.
@@ -72,16 +74,39 @@ to gauge the size of a PHP version migration effort.
 
        chmod u+x summarise-compat-findings.sh && ./summarise-compat-findings.sh
 
-   - You will see displayed on the screen a summary like this:
+## The Reports
+- `summarise-compat-findings.sh` displays on the screen instructions like this:
+
 ```
-1: Number of incompatibility findings in your-report-name-7.4-20210621.out
+Look in /the/path/to/the/reporting/directory/you/specified
+- Overview: compatibility-overview-.txt
+- Summary Report: compatibility-summary-20210716.txt
+- Affected PHP Extensions: raw-ext-findings.txt
+```    
+
+- Your compatibility overview is in a file called `compatibility-overview-<PHP_VER>.txt`
+  and looks like this:
+
+```
+1: Number of incompatibility findings in code-directory-A-7.4-20210716.out
 Error-level  : 101
 Warning-level: 223
 Num Files    : 83
+
+2: Number of incompatibility findings in code-directory-B-7.4-20210716.out
+Error-level  : 3318
+Warning-level: 940
+Num Files    : 460
+
+Total findings in 2 reports
+Error-level  : 3419
+Warning-level: 1163
+Total: 4582
+Number of PHP source code files affected by findings: 543
 ```     
 
-   - Your per-finding detailed count of findings will be in a file called `compatibility-summary-YYMMDD.txt`
-     and looks like the example below. If yours is this clean, consider yourself lucky!
+- Your per-finding detailed count of findings is in a file called `compatibility-summary-YYMMDD.txt`
+  and looks like the example below. If yours is this clean, consider yourself lucky!
 
 ```
                             Number of Occurrences : PHP Compatibility Finding
@@ -90,7 +115,19 @@ Num Files    : 83
     2 : INI directive 'highlight.bg' is deprecated since PHP 5.3 and removed since PHP 5.4
     1 : 'resource' is a soft reserved keyword as of PHP version 7.0 and should not be used to name a class, interface or trait or as part of a
     1 : 'float' is a reserved keyword as of PHP version 7.0 and should not be used to name a class, interface or trait or as part of a namespace
-
 ----------------------------------------------------------------------------------------------------------
 Total Findings:  244
 ```
+
+- A list of deprecated or removed PHP Extensions your application uses is in `raw-ext-findings.txt`
+  and looks like this, showing the extension and the number of occurrences of that finding:
+
+```
+ Extension 'ereg' is deprecated since PHP 5.3 and removed since PHP 7.0; Use pcre instead 23
+ Extension 'ibase' is removed since PHP 7.4; Use pecl/ibase instead 42
+ Extension 'mssql' is removed since PHP 7.0 58
+ Extension 'mysql_' is deprecated since PHP 5.5 and removed since PHP 7.0; Use mysqli instead 188
+ Extension 'sqlite' is removed since PHP 5.4 39
+ Extension 'sybase' is removed since PHP 5.3; Use sybase_ct instead 33
+ Extension 'mcrypt' is deprecated since PHP 7.1 and removed since PHP 7.2; Use openssl (preferred) or pecl/mcrypt once available instead 11
+```     
