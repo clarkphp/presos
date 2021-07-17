@@ -85,7 +85,8 @@ Look in /the/path/to/the/reporting/directory/you/specified
 ```    
 
 - Your compatibility overview is in a file called `compatibility-overview-<PHP_VER>.txt`
-  and looks like this:
+  and looks like this, with one section for each directory/folder you specified with
+  `DIRLIST` in step 7 above:
 
 ```
 1: Number of incompatibility findings in code-directory-A-7.4-20210716.out
@@ -106,7 +107,7 @@ Number of PHP source code files affected by findings: 543
 ```     
 
 - Your per-finding detailed count of findings is in a file called `compatibility-summary-YYMMDD.txt`
-  and looks like the example below. If yours is this clean, consider yourself lucky!
+  and will look like the example below. If yours is this clean, consider yourself lucky!
 
 ```
                             Number of Occurrences : PHP Compatibility Finding
@@ -120,7 +121,7 @@ Total Findings:  244
 ```
 
 - A list of deprecated or removed PHP Extensions your application uses is in `raw-ext-findings.txt`
-  and looks like this, showing the extension and the number of occurrences of that finding:
+  and looks something like this, showing the extension and the number of occurrences of that finding:
 
 ```
  Extension 'ereg' is deprecated since PHP 5.3 and removed since PHP 7.0; Use pcre instead 23
