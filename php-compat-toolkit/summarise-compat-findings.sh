@@ -11,12 +11,13 @@
 #     ./summarise-compat-findings.sh
 
 TODAY="$(date +'%Y%m%d')"
+PHP_VER="" # Example: 74; TODO glean this from earlier steps
 REPORT_DIR="/home/$LOGNAME/php-compat-toolkit"
 SCRIPTS_DIR="/home/$LOGNAME/php-compat-toolkit"
-PHP_VER="" # TODO glean this from earlier steps
 php_exe="/usr/local/zendsvr6/bin/php-cli" # path to your PHP binary (executable)
 
 cd "$REPORT_DIR" || exit
+test -e "$SCRIPTS_DIR/counts.php" || { printf "%s/counts.php is missing\n" "$SCRIPTS_DIR"; exit 1; }
 
 i=0
 esum=0
@@ -63,7 +64,6 @@ uniq "$raw_counts" | grep -F ' Extension ' > "$raw_ext_findings"
 printf "Total findings in %d reports\nError-level  : %d\nWarning-level: %d\nTotal: %d\n" "$i" "$esum" "$wsum" "$((esum + wsum))" >> "$overview"
 printf "Number of PHP source code files affected by findings: %d\n\n" "$fsum"  >> "$overview"
 
-test -e "$SCRIPTS_DIR/counts.php" || { printf "%s/counts.php is missing\n" "$REPORT_DIR"; exit 1; }
 "$php_exe" "$SCRIPTS_DIR/counts.php" "$raw_counts" > "$REPORT_DIR/compatibility-summary-$TODAY.txt"
 
 printf "\nLook in %s:\n- Overview: %s\n- Summary Report: %s\n- Affected PHP Extensions: %s\n" \
