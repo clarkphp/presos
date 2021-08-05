@@ -42,16 +42,16 @@ $dup_map = [
  => 'Since PHP 7.0, functions inspecting arguments no longer report the original value as passed to a parameter, but will instead provide the current value.',
     'Since PHP 7.0, functions inspecting arguments, like func_get_args(), no longer report the original value as passed to a parameter, but will instead provide the current value. The'
  => 'Since PHP 7.0, functions inspecting arguments no longer report the original value as passed to a parameter, but will instead provide the current value.',
-//    'Function split() is deprecated since PHP 5.3 and removed'  => 'Function split() is deprecated since PHP 5.3 and',
-//    'Global variable \'$HTTP_POST_FILES\' is deprecated since'  => 'Global variable \'$HTTP_POST_FILES\' is deprecated',
-//    'Global variable \'$HTTP_POST_VARS\' is deprecated since'   => 'Global variable \'$HTTP_POST_VARS\' is deprecated',
-//    'Global variable \'$HTTP_SERVER_VARS\' is deprecated since' => 'Global variable \'$HTTP_SERVER_VARS\' is deprecated',
-//    'INI directive \'safe_mode\' is deprecated since PHP 5.3'   => 'INI directive \'safe_mode\' is deprecated since PHP',
-//    'Since PHP 7.0, functions inspecting arguments, like'       => 'Since PHP 7.0, functions inspecting arguments,',
-//    'The __toString() magic method will no longer accept'       => 'The __toString() magic method can no longer accept',
-//    'Use of deprecated PHP4 style class constructor is not'     => 'Use of deprecated PHP4 style class constructor',
-//    'Use of deprecated PHP4 style class constructor is'         => 'Use of deprecated PHP4 style class constructor',
-//    'preg_replace() - /e modifier is deprecated since PHP'      => 'preg_replace() - /e modifier is deprecated since',
+    'Function split() is deprecated since PHP 5.3 and removed'  => 'Function split() is deprecated since PHP 5.3 and',
+    'Global variable \'$HTTP_POST_FILES\' is deprecated since'  => 'Global variable \'$HTTP_POST_FILES\' is deprecated',
+    'Global variable \'$HTTP_POST_VARS\' is deprecated since'   => 'Global variable \'$HTTP_POST_VARS\' is deprecated',
+    'Global variable \'$HTTP_SERVER_VARS\' is deprecated since' => 'Global variable \'$HTTP_SERVER_VARS\' is deprecated',
+    'INI directive \'safe_mode\' is deprecated since PHP 5.3'   => 'INI directive \'safe_mode\' is deprecated since PHP',
+    'Since PHP 7.0, functions inspecting arguments, like'       => 'Since PHP 7.0, functions inspecting arguments,',
+    'The __toString() magic method will no longer accept'       => 'The __toString() magic method can no longer accept',
+    'Use of deprecated PHP4 style class constructor is not'     => 'Use of deprecated PHP4 style class constructor',
+    'Use of deprecated PHP4 style class constructor is'         => 'Use of deprecated PHP4 style class constructor',
+    'preg_replace() - /e modifier is deprecated since PHP'      => 'preg_replace() - /e modifier is deprecated since',
 ];
 
 fwrite(STDERR, "Processing file $argv[1]" . PHP_EOL);
