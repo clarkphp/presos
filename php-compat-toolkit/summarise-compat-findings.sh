@@ -18,6 +18,7 @@ php_exe="/usr/local/zendsvr6/bin/php-cli" # path to your PHP binary (executable)
 
 cd "$REPORT_DIR" || exit
 test -e "$SCRIPTS_DIR/counts.php" || { printf "%s/counts.php is missing\n" "$SCRIPTS_DIR"; exit 1; }
+test -e "$SCRIPTS_DIR/filter-input-file.php" || { printf "%s/filter-input-file.php is missing\n" "$SCRIPTS_DIR"; exit 1; }
 
 i=0
 esum=0
@@ -35,13 +36,16 @@ printf "" > "$raw_ext_findings"
 printf "" > "$overview"
 
 for REPORT_FILE in *.out; do
+  if [ ! -e "$REPORT_FILE" ]; then
+    printf "%s not found. Continuing...\n" "$REPORT_FILE"
+    continue
+  fi
+
+  "$php_exe" "$SCRIPTS_DIR/filter-input-file.php" "$REPORT_FILE"
+
   e_count=0
   w_count=0
   f_count=0
-
-  if [ ! -e "$REPORT_FILE" ]; then
-    continue
-  fi
 
   i=$((i + 1))
   printf "%d: Number of incompatibility findings in %s\n" "$i" "$REPORT_FILE" >> "$overview"

@@ -1,0 +1,68 @@
+
+FILE: ...vr6/htdocs/app/Lib/Excel/PHPExcel/CachedObjectStorage/SQLite.php
+----------------------------------------------------------------------
+FOUND 9 ERRORS AFFECTING 9 LINES
+----------------------------------------------------------------------
+  63 | ERROR | Extension 'sqlite' is removed since PHP 5.4
+  64 | ERROR | Extension 'sqlite' is removed since PHP 5.4
+ 108 | ERROR | Extension 'sqlite' is removed since PHP 5.4
+ 142 | ERROR | Extension 'sqlite' is removed since PHP 5.4
+ 166 | ERROR | Extension 'sqlite' is removed since PHP 5.4
+ 211 | ERROR | Extension 'sqlite' is removed since PHP 5.4
+ 236 | ERROR | Extension 'sqlite' is removed since PHP 5.4
+ 274 | ERROR | Extension 'sqlite' is removed since PHP 5.4
+ 276 | ERROR | Extension 'sqlite' is removed since PHP 5.4
+----------------------------------------------------------------------
+
+
+FILE: .../zendsvr6/htdocs/app/Lib/Excel/PHPExcel/Calculation/Database.php
+----------------------------------------------------------------------
+FOUND 0 ERRORS AND 2 WARNINGS AFFECTING 2 LINES
+----------------------------------------------------------------------
+ 67 | WARNING | Method name
+    |         | "PHPExcel_Calculation_Database::__fieldExtract" is
+    |         | discouraged; PHP has reserved all method names with a
+    |         | double underscore prefix for future use.
+ 98 | WARNING | Method name "PHPExcel_Calculation_Database::__filter"
+    |         | is discouraged; PHP has reserved all method names
+    |         | with a double underscore prefix for future use.
+----------------------------------------------------------------------
+
+
+FILE: .../zendsvr6/htdocs/app/Lib/Excel/PHPExcel/Calculation/DateTime.php
+----------------------------------------------------------------------
+FOUND 2 ERRORS AFFECTING 2 LINES
+----------------------------------------------------------------------
+ 891 | ERROR | Since PHP 7.0, functions inspecting arguments, like
+     |       | func_get_args(), no longer report the original value
+     |       | as passed to a parameter, but will instead provide the
+     |       | current value. The parameter "$startDate" was changed
+     |       | on line 888.
+ 973 | ERROR | Since PHP 7.0, functions inspecting arguments, like
+     |       | func_get_args(), no longer report the original value
+     |       | as passed to a parameter, but will instead provide the
+     |       | current value. The parameter "$startDate" was changed
+     |       | on line 970.
+----------------------------------------------------------------------
+
+
+FILE: ...zendsvr6/htdocs/app/Lib/Excel/PHPExcel/Calculation/Functions.php
+----------------------------------------------------------------------
+FOUND 1 ERROR AFFECTING 1 LINE
+----------------------------------------------------------------------
+ 581 | ERROR | Using 'break' outside of a loop or switch structure is
+     |       | invalid and will throw a fatal error since PHP 7.0
+----------------------------------------------------------------------
+
+
+FILE: ...zendsvr6/htdocs/app/Lib/Excel/PHPExcel/Calculation/LookupRef.php
+----------------------------------------------------------------------
+FOUND 1 ERROR AFFECTING 1 LINE
+----------------------------------------------------------------------
+ 373 | ERROR | Since PHP 7.0, functions inspecting arguments, like
+     |       | func_get_args(), no longer report the original value
+     |       | as passed to a parameter, but will instead provide the
+     |       | current value. The parameter "$rows" was changed on
+     |       | line 365.
+----------------------------------------------------------------------
+
