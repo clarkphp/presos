@@ -68,10 +68,10 @@ uniq "$raw_counts" | grep -F ' Extension ' > "$raw_ext_findings"
 printf "Total findings in %d reports\nError-level  : %d\nWarning-level: %d\nTotal: %d\n" "$i" "$esum" "$wsum" "$((esum + wsum))" >> "$overview"
 printf "Number of PHP source code files affected by findings: %d\n\n" "$fsum"  >> "$overview"
 
-"$php_exe" "$SCRIPTS_DIR/counts.php" "$raw_counts" > "$REPORT_DIR/compatibility-summary-$TODAY.txt"
+"$php_exe" "$SCRIPTS_DIR/counts.php" "$raw_counts" > "$REPORT_DIR/compatibility-summary-$PHP_VER-$TODAY.txt"
 
 printf "\nLook in %s:\n- Overview: %s\n- Summary Report: %s\n- Affected PHP Extensions: %s\n" \
 "$REPORT_DIR" \
 "compatibility-overview-$PHP_VER.txt" \
-"compatibility-summary-$TODAY.txt" \
+"compatibility-summary-$PHP_VER-$TODAY.txt" \
 "raw-ext-findings.txt"
