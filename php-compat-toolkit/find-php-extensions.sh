@@ -7,8 +7,8 @@
 
 # Edit and run this script first
 # Usage:
-#    chmod u+x find-relevant-extensions.sh
-#    ./find-relevant-extensions.sh
+#    chmod u+x find-php-extensions.sh
+#    ./find-php-extensions.sh
 REPORT_DIR="/home/$LOGNAME/php-compat-toolkit" # /Absolute/path/to/report/output/directory
 OUTPUT_RPT="file-extensions-with-php.txt"
 TARGET_DIR="/www/zendsvr6/htdocs/foldername" # /path/to/directory/tree/to/scan
