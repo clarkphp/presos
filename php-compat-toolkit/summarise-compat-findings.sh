@@ -12,8 +12,8 @@
 
 TODAY="$(date +'%Y%m%d')"
 PHP_VER="" # Example: 74; TODO glean this from earlier steps
-REPORT_DIR="/home/$LOGNAME/php-compat-toolkit"
-SCRIPTS_DIR="/home/$LOGNAME/php-compat-toolkit"
+REPORT_DIR="$HOME/php-compat-toolkit"
+SCRIPTS_DIR="$HOME/php-compat-toolkit"
 php_exe="/usr/local/zendsvr6/bin/php-cli" # path to your PHP binary (executable)
 
 cd "$REPORT_DIR" || exit

@@ -16,7 +16,7 @@
 
 TODAY="$(date +'%Y%m%d')"
 ENCLOSING="/www/zendsvr6/htdocs"
-REPORT_DIR="/home/$LOGNAME/php-compat-toolkit" # /path/to/your/desired/report/output/folder
+REPORT_DIR="$HOME/php-compat-toolkit" # /path/to/your/desired/report/output/folder
 PHP_MEM_LIMIT="1024M" # 1GB, you can almost always lower this; raise if scans runs out of memory
 FILE_EXTENSIONS="html,inc,php,phtml"
 IGNORE_FILES="*/vendor/*,*Copy*,*/folder2/*"
