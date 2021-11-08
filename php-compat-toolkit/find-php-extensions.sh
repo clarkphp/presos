@@ -12,8 +12,8 @@
 REPORT_DIR="$HOME/php-compat-toolkit" # /Absolute/path/to/report/output/directory
 OUTPUT_RPT="file-extensions-with-php.txt"
 TARGET_DIR="/www/zendsvr6/htdocs/foldername" # /path/to/directory/tree/to/scan
-
-cd $TARGET_DIR || { printf "Cannot change to %s\n" "$TARGET_DIR"; exit 1; }
+test -w "$REPORT_DIR" || { printf "Report directory %s does not exist or is not writable" "$REPORT_DIR"; exit 1; }
+test -r "$TARGET_DIR" || { printf "Target directory %s does not exist or is not readable" "$TARGET_DIR"; exit 1; }
 
 /QOpenSys/pkgs/bin/grep --null -E -l --recursive --exclude-dir=.svn '<\?php|<\?=' . \
   | grep -v '^Binary file' | xargs -0 basename -a | awk -F. '{print $NF}' \
