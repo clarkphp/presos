@@ -1,5 +1,7 @@
 #!/usr/bin/env php
 <?php
+declare(strict_types=1);
+
 /**
  * Generates per-finding counts of PHPCompatibility report findings.
  * Invoked by php-compat-toolkit/summarise-compat-findings.sh
@@ -35,7 +37,7 @@ $sum = 0;
  * Different versions of PHPCompatibility produce different strings for some findings,
  * making this de-duplication a bit of work.
  *
- * To add to this list, check the output of `raw-counts.txt` and use the krsort() below
+ * To add to this list, check the output of `raw-counts.txt` and use the ksort() below
  */
 $dup_map = [
     'Since PHP 7.0, functions inspecting arguments, like debug_backtrace(), no longer report the original value as passed to a parameter, but will instead provide the current value. The'
@@ -43,6 +45,24 @@ $dup_map = [
     'Since PHP 7.0, functions inspecting arguments, like func_get_args(), no longer report the original value as passed to a parameter, but will instead provide the current value. The'
  => 'Since PHP 7.0, functions inspecting arguments no longer report the original value as passed to a parameter, but will instead provide the current value.',
     'Function split() is deprecated since PHP 5.3 and removed'  => 'Function split() is deprecated since PHP 5.3 and',
+    'Extension \'mcrypt\' is deprecated since PHP 7.1'          => 'Extension \'mcrypt\' is deprecated since',
+    'Extension \'mcrypt\' is deprecated since PHP 7.1 and'      => 'Extension \'mcrypt\' is deprecated since',
+    'Function mcrypt_create_iv() is deprecated since'           => 'mcrypt_*() funcions deprecated since',
+    'Function mcrypt_encrypt() is deprecated since PHP 7.1'     => 'mcrypt_*() funcions deprecated since',
+    'Function mcrypt_decrypt() is deprecated since PHP 7.1'     => 'mcrypt_*() funcions deprecated since',
+    'Function mcrypt_encrypt() is deprecated since'             => 'mcrypt_*() funcions deprecated since',
+    'Function mcrypt_decrypt() is deprecated since'             => 'mcrypt_*() funcions deprecated since',
+    'Function mcrypt_get_iv_size() is deprecated'               => 'mcrypt_*() funcions deprecated since',
+    'Function mcrypt_get_iv_size() is deprecated since'         => 'mcrypt_*() funcions deprecated since',
+    'Function mcrypt_get_iv_size() is deprecated since PHP'     => 'mcrypt_*() funcions deprecated since',
+    'The constant "MCRYPT_ARCFOUR" is deprecated'               => '"MCRYPT_*" constants deprecated since',
+    'The constant "MCRYPT_MODE_CBC" is deprecated'              => '"MCRYPT_*" constants deprecated since',
+    'The constant "MCRYPT_MODE_CBC" is deprecated since PHP'    => '"MCRYPT_*" constants deprecated since',
+    'The constant "MCRYPT_MODE_ECB" is deprecated since PHP'    => '"MCRYPT_*" constants deprecated since',
+    'The constant "MCRYPT_MODE_STREAM" is deprecated'           => '"MCRYPT_*" constants deprecated since',
+    'The constant "MCRYPT_RAND" is deprecated since'            => '"MCRYPT_*" constants deprecated since',
+    'The constant "MCRYPT_RIJNDAEL_128" is deprecated'          => '"MCRYPT_*" constants deprecated since',
+    'The constant "MCRYPT_RIJNDAEL_128" is deprecated since'    => '"MCRYPT_*" constants deprecated since',
     'Global variable \'$HTTP_POST_FILES\' is deprecated since'  => 'Global variable \'$HTTP_POST_FILES\' is deprecated',
     'Global variable \'$HTTP_POST_VARS\' is deprecated since'   => 'Global variable \'$HTTP_POST_VARS\' is deprecated',
     'Global variable \'$HTTP_SERVER_VARS\' is deprecated since' => 'Global variable \'$HTTP_SERVER_VARS\' is deprecated',
@@ -69,11 +89,11 @@ foreach ($lines as $line) {
 }
 
 arsort($findings, SORT_NUMERIC); // sort descending by frequency of finding
-// ksort($findings, SORT_LOCALE_STRING); // look for "duplicate" findings strings
+//ksort($findings, SORT_LOCALE_STRING); // look for "duplicate" findings strings
 
 printHeader();
 foreach ($findings as $finding => $count) {
-    print str_pad($count, LEN_COUNT_COL, ' ', STR_PAD_LEFT) . ' : ' . $finding . PHP_EOL;
+    print str_pad((string) $count, LEN_COUNT_COL, ' ', STR_PAD_LEFT) . ' : ' . $finding . PHP_EOL;
 }
 printSum($sum);
 
@@ -84,7 +104,7 @@ printSum($sum);
  *
  * @return string
  */
-function extractFindingAndCount($line, &$matches)
+function extractFindingAndCount(string $line, array &$matches): string
 {
     // Still looking for a single pattern to do this.
     // If it exists, we do not want the text ( Found: \s+), prior to the count
@@ -105,7 +125,7 @@ function extractFindingAndCount($line, &$matches)
  * @param string $finding
  * @return string
  */
-function deduplicateFindingText($dup_map, $finding)
+function deduplicateFindingText(array $dup_map, string $finding): string
 {
     $index = ltrim($finding, ' []x');
     if (isset($dup_map[$index])) {
@@ -118,18 +138,18 @@ function deduplicateFindingText($dup_map, $finding)
 /**
  * @return void
  */
-function printHeader()
+function printHeader(): void
 {
     print str_pad('Number of Occurrences : PHP Compatibility Finding', LEN_COUNT_COL + LEN_FINDING_COL, ' ', STR_PAD_BOTH) . PHP_EOL
         . str_repeat('-', LEN_FINDING_COL + LEN_COUNT_COL) . PHP_EOL;
 }
 
 /**
- * @param $sum
+ * @param int $sum
  * @return void
  */
-function printSum($sum)
+function printSum(int $sum): void
 {
     print PHP_EOL . str_repeat('-', 1 + LEN_FINDING_COL + LEN_COUNT_COL) . PHP_EOL
-        . 'Total Findings' . ':' . str_pad($sum, LEN_COUNT_COL, ' ', STR_PAD_LEFT) . PHP_EOL;
+        . 'Total Findings' . ':' . str_pad((string) $sum, LEN_COUNT_COL, ' ', STR_PAD_LEFT) . PHP_EOL;
 }
