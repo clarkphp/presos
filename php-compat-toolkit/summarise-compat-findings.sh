@@ -14,11 +14,13 @@ TODAY="$(date +'%Y%m%d')"
 PHP_VER="" # Example: 74; TODO glean this from earlier steps
 REPORT_DIR="$HOME/php-compat-toolkit"
 SCRIPTS_DIR="$HOME/php-compat-toolkit"
+SRC_DIR="$HOME/path/to/output/files/to/scan"
 php_exe="/usr/local/zendsvr6/bin/php-cli" # path to your PHP binary (executable)
 
-cd "$REPORT_DIR" || exit
+test -w "$REPORT_DIR" || { printf "Report directory %s does not exist or is not writable" "$REPORT_DIR"; exit 1; }
 test -e "$SCRIPTS_DIR/counts.php" || { printf "%s/counts.php is missing\n" "$SCRIPTS_DIR"; exit 1; }
 test -e "$SCRIPTS_DIR/filter-input-file.php" || { printf "%s/filter-input-file.php is missing\n" "$SCRIPTS_DIR"; exit 1; }
+test -r "$SRC_DIR" || { printf "%s is missing or is not readable\n" "$SRC_DIR"; exit 1; }
 
 i=0
 esum=0
@@ -35,7 +37,10 @@ printf "" > "$raw_counts"
 printf "" > "$raw_ext_findings"
 printf "" > "$overview"
 
+cd $SRC_DIR || exit 1
+
 for REPORT_FILE in *.out; do
+  printf "Inspecting %s...\n" "$REPORT_FILE"
   if [ ! -e "$REPORT_FILE" ]; then
     printf "%s not found. Continuing...\n" "$REPORT_FILE"
     continue
