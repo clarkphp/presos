@@ -40,38 +40,18 @@ $sum = 0;
  * To add to this list, check the output of `raw-counts.txt` and use the ksort() below
  */
 $dup_map = [
-    'Since PHP 7.0, functions inspecting arguments, like debug_backtrace(), no longer report the original value as passed to a parameter, but will instead provide the current value. The'
- => 'Since PHP 7.0, functions inspecting arguments no longer report the original value as passed to a parameter, but will instead provide the current value.',
-    'Since PHP 7.0, functions inspecting arguments, like func_get_args(), no longer report the original value as passed to a parameter, but will instead provide the current value. The'
- => 'Since PHP 7.0, functions inspecting arguments no longer report the original value as passed to a parameter, but will instead provide the current value.',
-    'Function split() is deprecated since PHP 5.3 and removed'  => 'Function split() is deprecated since PHP 5.3 and',
-    'Extension \'mcrypt\' is deprecated since PHP 7.1'          => 'Extension \'mcrypt\' is deprecated since',
-    'Extension \'mcrypt\' is deprecated since PHP 7.1 and'      => 'Extension \'mcrypt\' is deprecated since',
-    'Function mcrypt_create_iv() is deprecated since'           => 'mcrypt_*() funcions deprecated since',
-    'Function mcrypt_encrypt() is deprecated since PHP 7.1'     => 'mcrypt_*() funcions deprecated since',
-    'Function mcrypt_decrypt() is deprecated since PHP 7.1'     => 'mcrypt_*() funcions deprecated since',
-    'Function mcrypt_encrypt() is deprecated since'             => 'mcrypt_*() funcions deprecated since',
-    'Function mcrypt_decrypt() is deprecated since'             => 'mcrypt_*() funcions deprecated since',
-    'Function mcrypt_get_iv_size() is deprecated'               => 'mcrypt_*() funcions deprecated since',
-    'Function mcrypt_get_iv_size() is deprecated since'         => 'mcrypt_*() funcions deprecated since',
-    'Function mcrypt_get_iv_size() is deprecated since PHP'     => 'mcrypt_*() funcions deprecated since',
-    'The constant "MCRYPT_ARCFOUR" is deprecated'               => '"MCRYPT_*" constants deprecated since',
-    'The constant "MCRYPT_MODE_CBC" is deprecated'              => '"MCRYPT_*" constants deprecated since',
-    'The constant "MCRYPT_MODE_CBC" is deprecated since PHP'    => '"MCRYPT_*" constants deprecated since',
-    'The constant "MCRYPT_MODE_ECB" is deprecated since PHP'    => '"MCRYPT_*" constants deprecated since',
-    'The constant "MCRYPT_MODE_STREAM" is deprecated'           => '"MCRYPT_*" constants deprecated since',
-    'The constant "MCRYPT_RAND" is deprecated since'            => '"MCRYPT_*" constants deprecated since',
-    'The constant "MCRYPT_RIJNDAEL_128" is deprecated'          => '"MCRYPT_*" constants deprecated since',
-    'The constant "MCRYPT_RIJNDAEL_128" is deprecated since'    => '"MCRYPT_*" constants deprecated since',
+    'Since PHP 7.0, functions inspecting arguments' => 'Since PHP 7.0, functions inspecting arguments provide current value',
+    'Function split() is deprecated since PHP 5.3 and removed'  => 'Function split() is deprecated since PHP 5.3',
+    'Extension \'mcrypt\' is deprecated'     => 'Extension \'mcrypt\' is deprecated since PHP 7.1',
+    'Function mcrypt_.+ is deprecated'       => 'mcrypt_*() functions deprecated since PHP 7.1',
+    'The constant "MCRYPT_.+" is deprecated' => 'MCRYPT_* constants deprecated since PHP 7.1',
     'Global variable \'$HTTP_POST_FILES\' is deprecated since'  => 'Global variable \'$HTTP_POST_FILES\' is deprecated',
     'Global variable \'$HTTP_POST_VARS\' is deprecated since'   => 'Global variable \'$HTTP_POST_VARS\' is deprecated',
     'Global variable \'$HTTP_SERVER_VARS\' is deprecated since' => 'Global variable \'$HTTP_SERVER_VARS\' is deprecated',
     'INI directive \'safe_mode\' is deprecated since PHP 5.3'   => 'INI directive \'safe_mode\' is deprecated since PHP',
-    'Since PHP 7.0, functions inspecting arguments, like'       => 'Since PHP 7.0, functions inspecting arguments,',
     'The __toString() magic method will no longer accept'       => 'The __toString() magic method can no longer accept',
-    'Use of deprecated PHP4 style class constructor is not'     => 'Use of deprecated PHP4 style class constructor',
-    'Use of deprecated PHP4 style class constructor is'         => 'Use of deprecated PHP4 style class constructor',
-    'preg_replace() - /e modifier is deprecated since PHP'      => 'preg_replace() - /e modifier is deprecated since',
+    'Use of deprecated PHP4 style class constructor' => 'Use of PHP4 style class constructor is deprecated/removed',
+    'preg_replace() - \/e modifier is deprecated since PHP'      => 'preg_replace() - /e modifier is deprecated since',
 ];
 
 fwrite(STDERR, "Processing file $argv[1]" . PHP_EOL);
@@ -127,12 +107,18 @@ function extractFindingAndCount(string $line, array &$matches): string
  */
 function deduplicateFindingText(array $dup_map, string $finding): string
 {
-    $index = ltrim($finding, ' []x');
-    if (isset($dup_map[$index])) {
-        $index = $dup_map[$index];
+    $findingText = ltrim($finding, ' []x');
+    $pattern = '';
+
+    foreach ($dup_map as $pattern => $dedupString) {
+        if (preg_match("/$pattern/", $finding) === 0) {
+            continue;
+        }
+
+        $findingText = $dup_map[$pattern];
     }
 
-    return $index;
+    return $findingText;
 }
 
 /**
